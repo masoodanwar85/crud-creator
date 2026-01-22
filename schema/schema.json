@@ -1,10 +1,22 @@
 {
   "entity": "User",
   "table": "users",
+
+  "permissions": {
+    "read": "user_read",
+    "create": "user_create",
+    "update": "user_update",
+    "delete": "user_delete"
+  },
+
   "fields": [
-    { "name": "id", "type": "integer", "dbType": "int", "primary": true },
-    { "name": "name", "type": "string", "dbType": "varchar", "length": 255 },
-    { "name": "email", "type": "string", "dbType": "varchar", "length": 255 },
-    { "name": "age", "type": "integer", "dbType": "int" }
+    { "name": "id", "type": "int", "primary": true },
+    { "name": "fname", "type": "string", "required": true },
+    { "name": "lname", "type": "string", "required": true },
+    { "name": "email", "type": "string", "required": true },
+    { "name": "user_type_id", "type": "int", "default": 3 },
+    { "name": "is_active", "type": "int", "default": 1 },
+    { "name": "password", "type": "string" },
+    { "name": "role_ids", "type": "string" }
   ]
 }

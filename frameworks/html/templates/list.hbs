@@ -1,0 +1,19 @@
+<h2>{{entity}} List</h2>
+
+<table border="1">
+<tr>
+{{#each fields}}
+  <th>{{name}}</th>
+{{/each}}
+</tr>
+
+{{!-- Dummy loop --}}
+<tr>
+{{#each fields}}
+  <td>{{name}}_value</td>
+{{/each}}
+</tr>
+
+</table>
+
+<a href="form.html">Create New {{entity}}</a>

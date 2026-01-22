@@ -3,6 +3,7 @@
   "files": {
     "model": "models/{{entity}}.cfc",
     "controller": "controllers/{{entity}}Controller.cfc",
-    "listView": "views/{{entity}}/list.cfm"
+    "listView": "views/{{entity}}/list.cfm",
+    "formView": "views/{{entity}}/form.cfm"
   }
 }

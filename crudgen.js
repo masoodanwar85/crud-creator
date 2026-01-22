@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
-const generate = require("./core/generator");
+const { generate, cleanOutput } = require("./core/generator");
+
 const fs = require("fs");
 
 // CLI args
@@ -9,6 +10,10 @@ const command = args[0];     // make:crud
 const entity = args[1];      // User
 const fwIndex = args.indexOf("--fw");
 const framework = fwIndex !== -1 ? args[fwIndex + 1] : null;
+
+const clean = args.includes("--clean");
+if (clean) cleanOutput(framework);
+
 
 if (!command || !entity || !framework) {
   console.log(`
@@ -29,6 +34,8 @@ schema.table = entity.toLowerCase() + "s";
 // Detect mode
 let mode = "crud";
 if (command === "make:model") mode = "model";
+
+schema.entityLower = schema.entity.toLowerCase();
 
 // Call generator correctly
 generate(framework, schema, mode);

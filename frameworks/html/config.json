@@ -1,0 +1,7 @@
+{
+  "name": "HTML Admin",
+  "files": {
+    "list": "views/{{entity}}/list.html",
+    "form": "views/{{entity}}/form.html"
+  }
+}

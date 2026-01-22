@@ -1,0 +1,12 @@
+<h2>Create {{entity}}</h2>
+
+<form method="post">
+{{#each fields}}
+  {{#unless primary}}
+  <label>{{name}}</label><br>
+  <input name="{{name}}" type="text"><br><br>
+  {{/unless}}
+{{/each}}
+
+<button type="submit">Save</button>
+</form>

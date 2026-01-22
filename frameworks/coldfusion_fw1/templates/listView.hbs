@@ -1,15 +1,24 @@
-<table border="1">
+<h2>{{entity}} List</h2>
+
+<table border="1" width="100%">
 <tr>
 {{#each fields}}
-<th>{{name}}</th>
+  <th>{{name}}</th>
 {{/each}}
+  <th>Actions</th>
 </tr>
 
 <cfloop array="#rc.records#" index="r">
 <tr>
 {{#each fields}}
-<td>#r.{{name}}#</td>
+  <td>#r.{{name}}#</td>
 {{/each}}
+  <td>
+    <a href="?action={{entity}}.edit&id=#r.id#">Edit</a>
+    <a href="?action={{entity}}.delete&id=#r.id#">Delete</a>
+  </td>
 </tr>
 </cfloop>
 </table>
+
+<a href="?action={{entity}}.form">Create New {{entity}}</a>

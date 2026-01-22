@@ -1,15 +1,109 @@
-component {
+component accessors="true" {
 
-function list(rc) {
-    rc.records = model("{{entity}}").getAll();
-}
+    property name="{{entityLower}}Service" inject="{{entity}}Service";
+    property name="validatorService" inject="validatorService";
 
-function save(rc) {
-    model("{{entity}}").save(rc);
-}
+    function init(fw) {
+        variables.fw = fw;
+    }
 
-function delete(rc) {
-    model("{{entity}}").delete(rc.id);
-}
+    // LIST
+    function list(rc) {
+        variables.{{entityLower}}Service.isAuthorize('{{permissions.read}}');
+        rc.{{entityLower}}s = variables.{{entityLower}}Service.get{{entity}}s();
+    }
 
+    // ADD / EDIT
+    function addEdit(rc) {
+        variables.{{entityLower}}Service.isAuthorize('{{permissions.create}},{{permissions.update}}');
+
+        if (structKeyExists(rc,'id') && val(rc.id) GT 0) {
+            variables.{{entityLower}}Service.isAuthorize('{{permissions.update}}');
+            rc.{{entityLower}} = variables.{{entityLower}}Service.get{{entity}}(rc.id);
+        } else {
+            variables.{{entityLower}}Service.isAuthorize('{{permissions.create}}');
+            rc.{{entityLower}} = {
+                recordCount = 0,
+                {{#each fields}}
+                {{name}} = {{#if default}}{{default}}{{else}}''{{/if}},
+                {{/each}}
+            };
+        }
+    }
+
+    // SAVE
+    function save(rc) {
+        variables.{{entityLower}}Service.isAuthorize('{{permissions.create}},{{permissions.update}}');
+
+        transaction {
+            try {
+                variables.validatorService.setData(rc)
+                {{#each fields}}
+                {{#if required}}
+                    .required("{{name}}","{{name}} is required")
+                {{/if}}
+                {{/each}}
+                ;
+
+                if (!variables.validatorService.isValid()) {
+                    rc.errors = variables.validatorService.getErrors();
+                    rc.{{entityLower}} = rc;
+
+                    {{#each fields}}
+                    {{#if (eq name "role_ids")}}
+                    if (!structKeyExists(rc.{{entityLower}},'role_ids')) {
+                        rc.{{entityLower}}.role_ids = '';
+                    }
+                    {{/if}}
+                    {{/each}}
+
+                    variables.fw.setView("{{entityLower}}.addedit");
+                    return;
+                }
+
+                rc.{{entityLower}}_id = variables.{{entityLower}}Service.save(rc);
+                session.message = "{{entity}} saved successfully.";
+                session.messageType = "success";
+                transactionCommit();
+
+            } catch (any e) {
+                session.message = "Error saving {{entity}}: " & e.message;
+                session.messageType = "danger";
+                transactionRollback();
+                throw(e);
+            }
+        }
+
+        return variables.fw.redirect(action="{{entityLower}}.list");
+    }
+
+    // DELETE
+    function delete(rc) {
+        variables.{{entityLower}}Service.isAuthorize('{{permissions.delete}}');
+
+        transaction {
+            try {
+                rc.{{entityLower}} = variables.{{entityLower}}Service.get{{entity}}(rc.id);
+
+                if (rc.{{entityLower}}.recordCount) {
+                    variables.{{entityLower}}Service.delete(rc.id);
+                    session.message = "{{entity}} deleted successfully.";
+                    session.messageType = "success";
+                } else {
+                    session.message = "Unable to delete {{entity}}";
+                    session.messageType = "danger";
+                }
+
+                transactionCommit();
+
+            } catch (any e) {
+                session.message = "Error deleting {{entity}}: " & e.message;
+                session.messageType = "danger";
+                transactionRollback();
+                throw(e);
+            }
+        }
+
+        return variables.fw.redirect(action="{{entityLower}}.list");
+    }
 }

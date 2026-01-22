@@ -1,0 +1,14 @@
+<h2>{{entity}} Form</h2>
+
+<form method="post" action="?action={{entity}}.save">
+{{#each fields}}
+  {{#unless primary}}
+  <label>{{name}}</label><br>
+  <input name="{{name}}" value="<cfoutput>#rc.record.{{name}}#</cfoutput>"><br><br>
+  {{/unless}}
+{{/each}}
+
+<input type="hidden" name="id" value="<cfoutput>#rc.record.id#</cfoutput>">
+
+<button type="submit">Save</button>
+</form>
