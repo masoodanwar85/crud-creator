@@ -1,0 +1,15 @@
+<table border="1">
+<tr>
+{{#each fields}}
+<th>{{name}}</th>
+{{/each}}
+</tr>
+
+<cfloop array="#rc.records#" index="r">
+<tr>
+{{#each fields}}
+<td>#r.{{name}}#</td>
+{{/each}}
+</tr>
+</cfloop>
+</table>

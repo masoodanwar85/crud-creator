@@ -1,0 +1,8 @@
+{
+  "name": "Laravel",
+  "files": {
+    "model": "app/Models/{{entity}}.php",
+    "controller": "app/Http/Controllers/{{entity}}Controller.php",
+    "migration": "database/migrations/{{timestamp}}_create_{{table}}.php"
+  }
+}

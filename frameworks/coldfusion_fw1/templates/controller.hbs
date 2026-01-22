@@ -1,0 +1,15 @@
+component {
+
+function list(rc) {
+    rc.records = model("{{entity}}").getAll();
+}
+
+function save(rc) {
+    model("{{entity}}").save(rc);
+}
+
+function delete(rc) {
+    model("{{entity}}").delete(rc.id);
+}
+
+}

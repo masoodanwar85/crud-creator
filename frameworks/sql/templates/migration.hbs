@@ -1,0 +1,7 @@
+CREATE TABLE {{table}} (
+{{#each fields}}
+  {{name}} {{dbType}}{{#if length}}({{length}}){{/if}}{{#if primary}} PRIMARY KEY{{/if}},
+{{/each}}
+  created_at DATETIME,
+  updated_at DATETIME
+);

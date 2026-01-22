@@ -1,0 +1,6 @@
+{
+  "name": "SQL",
+  "files": {
+    "migration": "migrations/{{table}}.sql"
+  }
+}

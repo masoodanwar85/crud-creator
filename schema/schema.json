@@ -1,0 +1,10 @@
+{
+  "entity": "User",
+  "table": "users",
+  "fields": [
+    { "name": "id", "type": "integer", "dbType": "int", "primary": true },
+    { "name": "name", "type": "string", "dbType": "varchar", "length": 255 },
+    { "name": "email", "type": "string", "dbType": "varchar", "length": 255 },
+    { "name": "age", "type": "integer", "dbType": "int" }
+  ]
+}

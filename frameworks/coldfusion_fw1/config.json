@@ -1,0 +1,8 @@
+{
+  "name": "ColdFusion FW/1",
+  "files": {
+    "model": "models/{{entity}}.cfc",
+    "controller": "controllers/{{entity}}Controller.cfc",
+    "listView": "views/{{entity}}/list.cfm"
+  }
+}
