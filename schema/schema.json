@@ -1,22 +1,18 @@
 {
-  "entity": "User",
-  "table": "users",
+  "entity": "kb",
+  "table": "kb_articles",
 
   "permissions": {
-    "read": "user_read",
-    "create": "user_create",
-    "update": "user_update",
-    "delete": "user_delete"
+    "read": "kb_read",
+    "create": "kb_create",
+    "update": "kb_update",
+    "delete": "kb_delete"
   },
 
   "fields": [
     { "name": "id", "type": "int", "primary": true },
-    { "name": "fname", "type": "string", "required": true },
-    { "name": "lname", "type": "string", "required": true },
-    { "name": "email", "type": "string", "required": true },
-    { "name": "user_type_id", "type": "int", "default": 3 },
-    { "name": "is_active", "type": "int", "default": 1 },
-    { "name": "password", "type": "string" },
-    { "name": "role_ids", "type": "string" }
+    { "name": "kb_category_id", "type": "int", "required": true },
+    { "name": "title", "type": "string", "required": true },
+    { "name": "body", "type": "text", "required": true }
   ]
 }
